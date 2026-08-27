@@ -13,12 +13,13 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# Carga de modelos
+# Carga de modelos & scalers
 model_co2      = joblib.load('modelos/model_co2.pkl')
 model_sector   = tf.keras.models.load_model('modelos/model_sector.keras')
 model_clusters = joblib.load('modelos/model_clusters.pkl')
 model_series   = joblib.load('modelos/model_series.pkl')
 scaler         = joblib.load('modelos/scaler.pkl')
+scaler_clusters = joblib.load('modelos/scaler_clusters.pkl')
 
 #  Features del modelo CO2
 CO2_FEATURES = [
@@ -101,33 +102,7 @@ SECTOR_FEATURES = [
     'reported_TRANSFER_Total phosphorus', 'reported_TRANSFER_Zinc and compounds (as Zn)'
 ]
 
-@app.post('/predict/sector')
-def predict_sector(data: dict):
-    # Crear DataFrame con el orden exacto del scaler
-    df = pd.DataFrame([data])
-
-    # Asegurar que tiene todas las features en el orden correcto
-    for col in SECTOR_FEATURES:
-        if col not in df.columns:
-            df[col] = 0
-    df = df[SECTOR_FEATURES]
-
-    # Aplicar log1p igual que en el entrenamiento
-    df = np.log1p(df)
-
-    # Escalar
-    df_scaled = scaler.transform(df)
-
-    # Predecir
-    prediccion = model_sector.predict(df_scaled, verbose=0)
-    sector_idx = int(np.argmax(prediccion[0]))
-    confianza = round(float(prediccion[0][sector_idx]) * 100, 1)
-
-    return {
-        'sector_predicho': SECTOR_NAMES.get(sector_idx, str(sector_idx)),
-        'sector_codigo': sector_idx + 1,
-        'confianza_pct': confianza
-    }
+# cluster names
 
 CLUSTER_NAMES = {
     0: 'Atípicos — vertidos al agua muy elevados',
@@ -135,6 +110,26 @@ CLUSTER_NAMES = {
     2: 'Perfil industrial reducido'
 }
 
+POLLUTANT_COLS_CLUSTER = [
+    'AIR_Ammonia (NH3)', 'AIR_Carbon dioxide (CO2)',
+    'AIR_Carbon dioxide (CO2) excluding biomass', 'AIR_Carbon monoxide (CO)',
+    'AIR_Chlorine and inorganic compounds (as HCl)',
+    'AIR_Hydrochlorofluorocarbons (HCFCs)', 'AIR_Mercury and compounds (as Hg)',
+    'AIR_Methane (CH4)', 'AIR_Nickel and compounds (as Ni)',
+    'AIR_Nitrogen oxides (NOX)', 'AIR_Nitrous oxide (N2O)',
+    'AIR_Non-methane volatile organic compounds (NMVOC)',
+    'AIR_Particulate matter (PM10)', 'AIR_Sulphur oxides (SOX)',
+    'AIR_Zinc and compounds (as Zn)', 'WASTE_Disposal_HW',
+    'WASTE_Disposal_NONHW', 'WASTE_Recovery_HW', 'WASTE_Recovery_NONHW',
+    'WATER_Arsenic and compounds (as As)', 'WATER_Chlorides (as total Cl)',
+    'WATER_Copper and compounds (as Cu)', 'WATER_Fluorides (as total F)',
+    'WATER_Lead and compounds (as Pb)', 'WATER_Nickel and compounds (as Ni)',
+    'WATER_Total nitrogen', 'WATER_Total organic carbon(as total C or COD/3) (TOC)',
+    'WATER_Total phosphorus', 'WATER_Zinc and compounds (as Zn)',
+    'TRANSFER_Nickel and compounds (as Ni)', 'TRANSFER_Phenols (as total C)',
+    'TRANSFER_Total nitrogen', 'TRANSFER_Total organic carbon(as total C or COD/3) (TOC)',
+    'TRANSFER_Total phosphorus', 'TRANSFER_Zinc and compounds (as Zn)'
+]
 # ── Endpoints
 
 @app.get('/health')
@@ -156,7 +151,7 @@ def predict_co2(data: dict):
 
     prediccion_log = model_co2.predict(df)[0]
     print(f"Predicción log10: {prediccion_log}")
-
+    # revierte el log10 para obtener toneladas
     toneladas = round(float(10 ** prediccion_log), 0)
     return {
         'co2_predicho_toneladas': toneladas,
@@ -165,29 +160,41 @@ def predict_co2(data: dict):
 
 @app.post('/predict/sector')
 def predict_sector(data: dict):
+    # Crear DataFrame con el orden exacto del scaler
     df = pd.DataFrame([data])
-    # Asegurar 70 features
-    for col in range(70 - len(df.columns)):
-        df[f'feature_{col}'] = 0
-    df_scaled = scaler.transform(df.iloc[:, :70])
-    prediccion = model_sector.predict(df_scaled)
+
+    # Asegurar que tiene todas las features en el orden correcto
+    for col in SECTOR_FEATURES:
+        if col not in df.columns:
+            df[col] = 0
+    df = df[SECTOR_FEATURES]
+
+    # Aplicar log1p igual que en el entrenamiento
+    df = np.log1p(df)
+
+    # Escalar
+    df_scaled = scaler.transform(df)
+
+    # Predecir
+    prediccion = model_sector.predict(df_scaled, verbose=0)
     sector_idx = int(np.argmax(prediccion[0]))
+    # calcular confianza como porcentaje de la probabilidad del sector predicho
     confianza = round(float(prediccion[0][sector_idx]) * 100, 1)
+
     return {
         'sector_predicho': SECTOR_NAMES.get(sector_idx, str(sector_idx)),
         'sector_codigo': sector_idx + 1,
         'confianza_pct': confianza
     }
-
 @app.post('/predict/cluster')
 def predict_cluster(data: dict):
     df = pd.DataFrame([data])
-    # KMeans espera 35 features
-    for col in range(35 - len(df.columns)):
-        df[f'feature_{col}'] = 0
-    X = np.log1p(df.iloc[:, :35].values)
-    from sklearn.preprocessing import StandardScaler
-    X_scaled = StandardScaler().fit_transform(X)
+    for col in POLLUTANT_COLS_CLUSTER:
+        if col not in df.columns:
+            df[col] = 0
+    df = df[POLLUTANT_COLS_CLUSTER]
+    X_log = np.log1p(df)
+    X_scaled = scaler_clusters.transform(X_log)
     cluster = int(model_clusters.predict(X_scaled)[0])
     return {
         'cluster': cluster,
