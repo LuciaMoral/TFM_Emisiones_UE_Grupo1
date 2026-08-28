@@ -171,8 +171,8 @@ def home():
             <p class="desc">Introduce el perfil de una instalación industrial y el modelo estimará sus emisiones anuales de CO₂.</p>
             <div class="grid">
                 <div class="field">
-                    <label>Año de reporte</label>
-                    <input type="number" id="co2_year" value="2022">
+                    <label>Año de reporte (2007-2024)</label>
+                    <input type="number" id="co2_year" value="2022" min="2007" max="2024">
                 </div>
                 <div class="field">
                     <label>Sector industrial</label>
