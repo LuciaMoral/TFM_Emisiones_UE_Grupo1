@@ -30,6 +30,7 @@
 ---
 
 ## Contenido del repositorio
+```
 
 📁 TFM_Emisiones_UE_Grupo1/
       README.md
@@ -51,6 +52,8 @@
       exportar_html.ipynb - conversión notebook a HTML
       verificar_modelos.ipynb - verificación features y modelos
       README.md
+
+```
 
 ## Datos
 
