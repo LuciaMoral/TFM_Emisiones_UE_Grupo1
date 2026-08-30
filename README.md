@@ -41,6 +41,8 @@
       main.py -  servidor FastAPI
       requirements.txt - dependencias
       Dockerfile  despliegue en Render
+📁 datasets/
+        dataset_merged_limpio.csv - dataset integrado y limpio (81.005 filas × 45 columnas)
 📁 modelos/
       model_co2.pkl - XGBoost regresión CO₂
       model_sector.keras - Red neuronal clasificación sector
