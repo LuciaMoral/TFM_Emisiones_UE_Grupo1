@@ -281,27 +281,27 @@ def home():
             <div class="grid">
                 <div class="field">
                     <label>CO₂ medio por instalación (kg/año)</label>
-                    <input type="number" id="cl_co2" value="985944900">
+                    <input type="text" id="cl_co2" value="985.944.900">
                 </div>
                 <div class="field">
                     <label>NOₓ medio por instalación (kg/año)</label>
-                    <input type="number" id="cl_nox" value="1971553">
+                    <input type="text" id="cl_nox" value="1.971.553">
                 </div>
                 <div class="field">
                     <label>SOₓ medio por instalación (kg/año)</label>
-                    <input type="number" id="cl_sox" value="13604870">
+                    <input type="text" id="cl_sox" value="13.604.870">
                 </div>
                 <div class="field">
                     <label>NH₃ medio por instalación (kg/año)</label>
-                    <input type="number" id="cl_nh3" value="14663">
+                    <input type="text" id="cl_nh3" value="14.663">
                 </div>
                 <div class="field">
                     <label>Cloruros en agua (kg/año)</label>
-                    <input type="number" id="cl_chlorides" value="7451533">
+                    <input type="text" id="cl_chlorides" value="7.451.533">
                 </div>
                 <div class="field">
                     <label>Residuos no peligrosos recuperados (t/año)</label>
-                    <input type="number" id="cl_waste_nonhw" value="85922">
+                    <input type="text" id="cl_waste_nonhw" value="85.922">
                 </div>
             </div>
             <button class="btn" onclick="predecirCluster()">Identificar cluster</button>
@@ -358,8 +358,11 @@ def home():
     }
 
     function getVal(id) {
-        return parseFloat(document.getElementById(id).value) || 0;
-    }
+    let val = document.getElementById(id).value
+        .replace(/\./g, '')
+        .replace(/,/g, '.');
+    return parseFloat(val) || 0;
+}
 
     function mostrarResultado(divId, valorId, valor, subId, sub) {
         const div = document.getElementById(divId);
