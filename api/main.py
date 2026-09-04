@@ -297,7 +297,7 @@ def home():
                 </div>
                 <div class="field">
                     <label>Cloruros en agua (kg/año)</label>
-                    <input type="text" id="cl_chlorides" value="7.451.533"  oninput="formatearMiles(this)>
+                    <input type="text" id="cl_chlorides" value="7.451.533"  oninput="formatearMiles(this)">
                 </div>
                 <div class="field">
                     <label>Residuos no peligrosos recuperados (t/año)</label>
