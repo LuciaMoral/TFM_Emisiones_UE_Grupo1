@@ -281,7 +281,7 @@ def home():
             <div class="grid">
                 <div class="field">
                     <label>CO₂ medio por instalación (kg/año)</label>
-                    <input type="text" id="cl_co2" value="985.944.900">
+                    <input type="text" id="cl_co2" value="985.944.900"  oninput="formatearMiles(this)">
                 </div>
                 <div class="field">
                     <label>NOₓ medio por instalación (kg/año)</label>
@@ -289,7 +289,7 @@ def home():
                 </div>
                 <div class="field">
                     <label>SOₓ medio por instalación (kg/año)</label>
-                    <input type="text" id="cl_sox" value="13.604.870">
+                    <input type="text" id="cl_sox" value="13.604.870"  oninput="formatearMiles(this)">
                 </div>
                 <div class="field">
                     <label>NH₃ medio por instalación (kg/año)</label>
@@ -297,11 +297,11 @@ def home():
                 </div>
                 <div class="field">
                     <label>Cloruros en agua (kg/año)</label>
-                    <input type="text" id="cl_chlorides" value="7.451.533">
+                    <input type="text" id="cl_chlorides" value="7.451.533"  oninput="formatearMiles(this)>
                 </div>
                 <div class="field">
                     <label>Residuos no peligrosos recuperados (t/año)</label>
-                    <input type="text" id="cl_waste_nonhw" value="85.922">
+                    <input type="text" id="cl_waste_nonhw" value="85.922"  oninput="formatearMiles(this)">
                 </div>
             </div>
             <button class="btn" onclick="predecirCluster()">Identificar cluster</button>
@@ -363,7 +363,12 @@ function getVal(id) {
         .replace(/[,]/g, '.');
     return parseFloat(val) || 0;
 }
-
+function formatearMiles(input) {
+    let val = input.value.replace(/[.]/g, '');
+    if (!isNaN(val) && val !== '') {
+        input.value = Number(val).toLocaleString('es-ES');
+    }
+}
     function mostrarResultado(divId, valorId, valor, subId, sub) {
         const div = document.getElementById(divId);
         div.classList.remove('error');
