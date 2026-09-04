@@ -285,7 +285,7 @@ def home():
                 </div>
                 <div class="field">
                     <label>NOₓ medio por instalación (kg/año)</label>
-                    <input type="text" id="cl_nox" value="1.971.553">
+                    <input type="text" id="cl_nox" value="1.971.553" oninput="formatearMiles(this)">
                 </div>
                 <div class="field">
                     <label>SOₓ medio por instalación (kg/año)</label>
@@ -293,7 +293,7 @@ def home():
                 </div>
                 <div class="field">
                     <label>NH₃ medio por instalación (kg/año)</label>
-                    <input type="text" id="cl_nh3" value="14.663">
+                    <input type="text" id="cl_nh3" value="14.663" oninput="formatearMiles(this)">
                 </div>
                 <div class="field">
                     <label>Cloruros en agua (kg/año)</label>
