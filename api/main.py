@@ -357,10 +357,10 @@ def home():
         btn.classList.add('active');
     }
 
-    function getVal(id) {
+function getVal(id) {
     let val = document.getElementById(id).value
-        .replace(/\./g, '')
-        .replace(/,/g, '.');
+        .replace(/[.]/g, '')
+        .replace(/[,]/g, '.');
     return parseFloat(val) || 0;
 }
 
