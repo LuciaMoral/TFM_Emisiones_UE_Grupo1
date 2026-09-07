@@ -203,23 +203,23 @@ def home():
                 </div>
                 <div class="field">
                     <label>NOₓ — Óxidos de nitrógeno (kg/año)</label>
-                    <input type="number" id="co2_nox" value="50000">
+                    <input type="text" id="co2_nox" value="50.000" oninput="formatearMiles(this)">
                 </div>
                 <div class="field">
                     <label>Residuos peligrosos recuperados (t/año)</label>
-                    <input type="number" id="co2_waste_rec_hw" value="500">
+                    <input type="text" id="co2_waste_rec_hw" value="500" oninput="formatearMiles(this)">
                 </div>
                 <div class="field">
                     <label>Residuos peligrosos eliminados (t/año)</label>
-                    <input type="number" id="co2_waste_dis_hw" value="100">
+                    <input type="text" id="co2_waste_dis_hw" value="100" oninput="formatearMiles(this)">
                 </div>
                 <div class="field">
                     <label>Residuos no peligrosos recuperados (t/año)</label>
-                    <input type="number" id="co2_waste_rec_nonhw" value="5000">
+                    <input type="text" id="co2_waste_rec_nonhw" value="5.000" oninput="formatearMiles(this)">
                 </div>
                 <div class="field">
                     <label>Residuos no peligrosos eliminados (t/año)</label>
-                    <input type="number" id="co2_waste_dis_nonhw" value="200">
+                    <input type="text" id="co2_waste_dis_nonhw" value="200" oninput="formatearMiles(this)">
                 </div>
             </div>
             <button class="btn" onclick="predecirCO2()">Calcular predicción</button>
@@ -240,27 +240,27 @@ def home():
             <div class="grid">
                 <div class="field">
                     <label>Amoniaco NH₃ (kg/año)</label>
-                    <input type="number" id="sec_nh3" value="50000">
+                    <input type="text" id="sec_nh3" value="50.000" oninput="formatearMiles(this)">
                 </div>
                 <div class="field">
                     <label>CO₂ (kg/año)</label>
-                    <input type="number" id="sec_co2" value="0">
+                    <input type="text" id="sec_co2" value="0" oninput="formatearMiles(this)">
                 </div>
                 <div class="field">
-                    <label>NOₓ (kg/año)</label>
-                    <input type="number" id="sec_nox" value="0">
+                    <label>Óxido de nitrógeno NOₓ (kg/año)</label>
+                    <input type="text" id="sec_nox" value="0" oninput="formatearMiles(this)">
                 </div>
                 <div class="field">
                     <label>Metano CH₄ (kg/año)</label>
-                    <input type="number" id="sec_ch4" value="0">
+                    <input type="text" id="sec_ch4" value="0" oninput="formatearMiles(this)">
                 </div>
                 <div class="field">
                     <label>Residuos no peligrosos recuperados (t/año)</label>
-                    <input type="number" id="sec_waste_nonhw" value="5000">
+                    <input type="text" id="sec_waste_nonhw" value="5.000" oninput="formatearMiles(this)">
                 </div>
                 <div class="field">
                     <label>SOₓ — Óxidos de azufre (kg/año)</label>
-                    <input type="number" id="sec_sox" value="0">
+                    <input type="text" id="sec_sox" value="0" oninput="formatearMiles(this)">
                 </div>
             </div>
             <button class="btn" onclick="predecirSector()">Identificar sector</button>
