@@ -73,6 +73,15 @@ Agencia Europea de Medio Ambiente y están disponibles para descarga en:
 El dataset limpio e integrado se genera ejecutando la sección de 
 preprocesamiento del notebook master — resultado: **81.005 filas × 45 columnas**.
   ---
+
+## Ver el análisis completo
+
+📊 **Ver notebook directamente en el navegador (sin descargar):**
+https://nbviewer.org/github/LuciaMoral/TFM_Emisiones_UE_Grupo1/blob/main/TFM_Emisiones_UE_FINAL.html
+
+O descarga `TFM_Emisiones_UE_FINAL.html` y ábrelo en cualquier navegador.
+---
+
 ## API en producción
 
 🌐 **Formulario web:** https://tfm-emisiones.onrender.com  
