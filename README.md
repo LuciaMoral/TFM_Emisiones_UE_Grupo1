@@ -69,6 +69,7 @@ Agencia Europea de Medio Ambiente y están disponibles para descarga en:
 - `F2_4_Water_Releases_Facilities.csv` — Emisiones al agua (252.313 filas)
 - `F3_2_Transfers_Facilities.csv` — Transferencias (65.475 filas)
 - `F4_2_WasteTransfers_Facilities.csv` — Residuos (843.877 filas)
+  
 
 El dataset limpio e integrado se genera ejecutando la sección de 
 preprocesamiento del notebook master — resultado: **81.005 filas × 45 columnas**.
@@ -78,6 +79,7 @@ preprocesamiento del notebook master — resultado: **81.005 filas × 45 columna
 
 📊 **Ver notebook directamente en el navegador (sin descargar):**
 https://nbviewer.org/github/LuciaMoral/TFM_Emisiones_UE_Grupo1/blob/main/TFM_Emisiones_UE_FINAL.html
+
 
 O descarga `TFM_Emisiones_UE_FINAL.html` y ábrelo en cualquier navegador.
 ---
